@@ -200,7 +200,7 @@ public class GameEngineTests
         SubInputValidator.Validate(Arg.Any<string>()).Returns(false);
 
         // Act
-        var result = sut.Compute(null);
+        var result = sut.Compute(null!);
 
         // Assert
         Assert.False(result.IsSuccessful);
@@ -208,6 +208,46 @@ public class GameEngineTests
         _ = SubCsvCardParser.DidNotReceive().TryParseMany(Arg.Any<string>(), out Arg.Any<List<Card>>());
         SubHandValidator.DidNotReceive().Validate(Arg.Any<List<Card>>());
         SubScoreCalculator.DidNotReceive().Calculate(Arg.Any<IReadOnlyList<Card>>());
+    }
+
+    [Gwt("Given a game engine",
+        "when contructed with a null input validator",
+        "then the an argument null exception is thrown")]
+    public void T11()
+    {
+        // Act & Assert
+        var ex = Assert.Throws<ArgumentNullException>(() => new GameEngine(null!, SubCsvCardParser, SubHandValidator, SubScoreCalculator));
+        Assert.Equal("inputValidator", ex.ParamName);
+    }
+
+    [Gwt("Given a game engine",
+        "when contructed with a null parser",
+        "then the an argument null exception is thrown")]
+    public void T12()
+    {
+        // Act & Assert
+        var ex = Assert.Throws<ArgumentNullException>(() => new GameEngine(SubInputValidator, null!, SubHandValidator, SubScoreCalculator));
+        Assert.Equal("parser", ex.ParamName);
+    }
+
+    [Gwt("Given a game engine",
+        "when contructed with a null hand validator",
+        "then the an argument null exception is thrown")]
+    public void T13()
+    {
+        // Act & Assert
+        var ex = Assert.Throws<ArgumentNullException>(() => new GameEngine(SubInputValidator, SubCsvCardParser, null!, SubScoreCalculator));
+        Assert.Equal("handValidator", ex.ParamName);
+    }
+
+    [Gwt("Given a game engine",
+        "when contructed with a null calculator",
+        "then the an argument null exception is thrown")]
+    public void T14()
+    {
+        // Act & Assert
+        var ex = Assert.Throws<ArgumentNullException>(() => new GameEngine(SubInputValidator, SubCsvCardParser, SubHandValidator, null!));
+        Assert.Equal("scoreCalculator", ex.ParamName);
     }
 
     private GameEngine TestGameEngine
