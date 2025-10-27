@@ -9,6 +9,27 @@ namespace CardGame.Engine.Services;
 
 internal sealed class CsvCardParser
 {
+    public static bool TryParseMany(string input, out List<Card> cards)
+    {
+        cards = [];
+
+        if (string.IsNullOrWhiteSpace(input))
+            return false;
+
+        var parts = input.Split(',');
+        foreach (var part in parts)
+        {
+            if (!TryParseCard(part, out var card))
+            {
+                cards.Clear();
+                return false;
+            }
+            cards.Add(card);
+        }
+
+        return true;
+    }
+
     public static bool TryParseCard(string input, out Card card)
     {
         card = new Card(CardRank.None, CardSuit.None); // Placeholder for unrecognised card

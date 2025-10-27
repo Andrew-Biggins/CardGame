@@ -66,9 +66,7 @@ public class ParserTests
 
     [InlineData("JR", true, CardRank.Joker, CardSuit.None)]
 
-    //
     // Invalid or unrecognised cases
-    //
     [InlineData("", false, CardRank.None, CardSuit.None)]           // Empty
     [InlineData(" ", false, CardRank.None, CardSuit.None)]          // Whitespace
     [InlineData(null, false, CardRank.None, CardSuit.None)]         // Null
@@ -89,5 +87,31 @@ public class ParserTests
         Assert.Equal(expectedResult, result);
         Assert.Equal(expectedRank, card.Value);
         Assert.Equal(expectedSuit, card.Suit);
+    }
+
+    [GwtTheory("Given a CSV card parser",
+           "when parsing multiple cards",
+           "then all valid cards are returned or parsing fails cleanly")]
+    [InlineData("2C", true, 1)]                                    // Valid single
+    [InlineData("2C,3D,AH", true, 3)]                              // Valid multiple
+    [InlineData(" 2C , 3D , AH ", true, 3)]                        // Extra whitespace
+    [InlineData("2c,3d,ah", true, 3)]                              // Lowercase input
+    [InlineData("2C,", false, 0)]                                  // Trailing comma -> invalid
+    [InlineData(",2C", false, 0)]                                  // Leading comma -> invalid
+    [InlineData("2C,,3D", false, 0)]                               // Double commas -> invalid
+    [InlineData("2C,1S,3D", false, 0)]                             // Contains an unrecognised card
+    [InlineData("2C 3D", false, 0)]                                // Invalid separator (no commas)
+    [InlineData("JR,2C,3D", true, 3)]                              // Joker handling
+    [InlineData("JR,2C,JR", true, 3)]                              // Two Jokers allowed
+    // Three Jokers -> invalid (will fail at validation stage, but here still shows list)
+    [InlineData("JR,JR,JR", true, 3)] // we’ll validate count elsewhere
+    public void T1(string input, bool expectedResult, int expectedCount)
+    {
+        // Arrange & Act
+        var result = CsvCardParser.TryParseMany(input, out var cards);
+
+        // Assert
+        Assert.Equal(expectedResult, result);
+        Assert.Equal(expectedCount, cards.Count);
     }
 }
