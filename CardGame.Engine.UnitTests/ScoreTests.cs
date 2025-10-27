@@ -1,4 +1,7 @@
 ﻿using CardGame.Engine.Services;
+using CardGame.Engine.Services.Calculations;
+using CardGame.Engine.Services.Parsing;
+using CardGame.Engine.Services.Validation;
 
 namespace CardGame.Engine.UnitTests;
 public class ScoreTests
@@ -29,11 +32,14 @@ public class ScoreTests
     public void T0(string input, int expectedScore)
     {
         // Arrange
-        Assert.True(CsvCardParser.TryParseMany(input, out var cards));
-        Assert.Equal(HandValidationResult.Valid, HandValidator.Validate(cards));
+        var parser = new CsvCardParser();
+        var validator = new HandValidator();
+        Assert.True(parser.TryParseMany(input, out var cards));
+        Assert.Equal(HandValidationResult.Valid, validator.Validate(cards));
+        var calculator = new ScoreCalculator();
 
         // Act
-        var result = ScoreCalculator.Calculate(cards);
+        var result = calculator.Calculate(cards);
 
         // Assert
         Assert.Equal(expectedScore, result);

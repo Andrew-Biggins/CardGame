@@ -1,9 +1,6 @@
 ﻿using CardGame.Engine.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CardGame.Engine.Services.Parsing;
+using CardGame.Engine.Services.Validation;
 
 namespace CardGame.Engine.UnitTests;
 
@@ -20,10 +17,12 @@ public class HandValidationTests
     public void T0(string input, HandValidationResult expected)
     {
         // Arrange
-        Assert.True(CsvCardParser.TryParseMany(input, out var cards));
+        var parser = new CsvCardParser();
+        Assert.True(parser.TryParseMany(input, out var cards));
+        var validator = new HandValidator();
 
         // Act
-        var result = HandValidator.Validate(cards);
+        var result = validator.Validate(cards);
 
         // Assert
         Assert.Equal(expected, result);

@@ -1,18 +1,19 @@
 ﻿using CardGame.Engine.Model;
 
-namespace CardGame.Engine.Services;
-internal static class HandValidator
+namespace CardGame.Engine.Services.Validation;
+
+internal class HandValidator : IHandValidator
 {
-    public static HandValidationResult Validate(IReadOnlyList<Card> cards)
+    public HandValidationResult Validate(IReadOnlyList<Card> cards)
     {
         // Count Jokers first
-        var jokerCount = cards.Count(c => c.Value == CardRank.Joker);
+        var jokerCount = cards.Count(c => c.Value == CardValue.Joker);
         if (jokerCount > 2)
             return HandValidationResult.InvalidTooManyJokers;
 
         // Check duplicates (ignore Jokers)
         var duplicates = cards
-            .Where(c => c.Value != CardRank.Joker)
+            .Where(c => c.Value != CardValue.Joker)
             .GroupBy(c => new { c.Value, c.Suit })
             .Any(g => g.Count() > 1);
 

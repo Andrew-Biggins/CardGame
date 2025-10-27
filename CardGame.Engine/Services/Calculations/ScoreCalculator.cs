@@ -1,14 +1,14 @@
 ﻿using CardGame.Engine.Model;
 
-namespace CardGame.Engine.Services;
+namespace CardGame.Engine.Services.Calculations;
 
-internal class ScoreCalculator
+internal class ScoreCalculator : IScoreCalculator
 {
-    public static int Calculate(IReadOnlyList<Card> cards)
+    public int Calculate(IReadOnlyList<Card> cards)
     {
         // Separate Jokers
-        int jokerCount = cards.Count(c => c.Value == CardRank.Joker);
-        var nonJokers = cards.Where(c => c.Value != CardRank.Joker);
+        int jokerCount = cards.Count(c => c.Value == CardValue.Joker);
+        var nonJokers = cards.Where(c => c.Value != CardValue.Joker);
 
         // Sum card values
         int total = nonJokers.Sum(c => (int)c.Value * SuitMultiplier(c.Suit));

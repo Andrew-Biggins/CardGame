@@ -1,10 +1,10 @@
 ﻿using CardGame.Engine.Model;
 
-namespace CardGame.Engine.Services;
+namespace CardGame.Engine.Services.Parsing;
 
-internal sealed class CsvCardParser
+internal class CsvCardParser : ICsvCardParser
 {
-    public static bool TryParseMany(string input, out List<Card> cards)
+    public bool TryParseMany(string input, out List<Card> cards)
     {
         cards = [];
 
@@ -25,9 +25,9 @@ internal sealed class CsvCardParser
         return true;
     }
 
-    public static bool TryParseCard(string input, out Card card)
+    internal static bool TryParseCard(string input, out Card card)
     {
-        card = new Card(CardRank.None, CardSuit.None); // Placeholder for unrecognised card
+        card = new Card(CardValue.None, CardSuit.None); // Placeholder for unrecognised card
 
         if (string.IsNullOrWhiteSpace(input) || input.Length < 2)
             return false;
@@ -38,32 +38,32 @@ internal sealed class CsvCardParser
 
         if (input == "JR")
         {
-            card = new Card(CardRank.Joker, CardSuit.None);
+            card = new Card(CardValue.Joker, CardSuit.None);
             return true;
         }
 
-        var rankCode = input[0];
+        var valueCode = input[0];
         var suitCode = input[1];
 
-        var rank = rankCode switch
+        var cardValue = valueCode switch
         {
-            '2' => CardRank.Two,
-            '3' => CardRank.Three,
-            '4' => CardRank.Four,
-            '5' => CardRank.Five,
-            '6' => CardRank.Six,
-            '7' => CardRank.Seven,
-            '8' => CardRank.Eight,
-            '9' => CardRank.Nine,
-            'T' => CardRank.Ten,
-            'J' => CardRank.Jack,
-            'Q' => CardRank.Queen,
-            'K' => CardRank.King,
-            'A' => CardRank.Ace,
-            _ => CardRank.None 
+            '2' => CardValue.Two,
+            '3' => CardValue.Three,
+            '4' => CardValue.Four,
+            '5' => CardValue.Five,
+            '6' => CardValue.Six,
+            '7' => CardValue.Seven,
+            '8' => CardValue.Eight,
+            '9' => CardValue.Nine,
+            'T' => CardValue.Ten,
+            'J' => CardValue.Jack,
+            'Q' => CardValue.Queen,
+            'K' => CardValue.King,
+            'A' => CardValue.Ace,
+            _ => CardValue.None 
         };
 
-        if (rank == CardRank.None) return false;
+        if (cardValue == CardValue.None) return false;
 
         var suit = suitCode switch
         {
@@ -76,7 +76,7 @@ internal sealed class CsvCardParser
 
         if (suit == CardSuit.None) return false;
 
-        card = new Card(rank, suit);
+        card = new Card(cardValue, suit);
 
         return true;
     }

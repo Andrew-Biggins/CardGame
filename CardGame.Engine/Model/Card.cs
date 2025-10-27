@@ -1,6 +1,6 @@
 ﻿namespace CardGame.Engine.Model;
 
-internal readonly record struct Card(CardRank Value, CardSuit Suit);
+internal readonly record struct Card(CardValue Value, CardSuit Suit);
 
 public enum CardSuit
 {
@@ -11,10 +11,10 @@ public enum CardSuit
     None 
 }
 
-public enum CardRank
+public enum CardValue
 {
     None = 0,
-    Joker = 0, // Not used for ranking
+    Joker = 1, // Not used for scoring
     Two = 2,
     Three = 3,
     Four = 4,
