@@ -1,14 +1,21 @@
-﻿using System.Configuration;
-using System.Data;
+﻿using CardGame.Engine;
 using System.Windows;
 
 namespace CardGame.WPF
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
-    }
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
 
+            var vm = new MainWindowViewModel();
+            var main = new MainWindow
+            {
+                DataContext = vm
+            };
+
+            main.Show();
+        }
+    }
 }

@@ -8,7 +8,7 @@ public class HandValidationTests
 {
     [GwtTheory("Given a hand validator",
            "when validating a list of cards",
-           "then duplicate or invalid hands are detected")]
+           "then the correct validation result is returned")]
     [InlineData("2C,3D,4H", HandValidationResult.Valid)]
     [InlineData("2C,3D,2C", HandValidationResult.InvalidDuplicates)]
     [InlineData("2C,3D,2C,3D", HandValidationResult.InvalidDuplicates)]

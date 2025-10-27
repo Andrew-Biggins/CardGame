@@ -92,19 +92,18 @@ public class ParserTests
     [GwtTheory("Given a CSV card parser",
            "when parsing multiple cards",
            "then all valid cards are returned or parsing fails cleanly")]
-    [InlineData("2C", true, 1)]                                    // Valid single
-    [InlineData("2C,3D,AH", true, 3)]                              // Valid multiple
-    [InlineData(" 2C , 3D , AH ", true, 3)]                        // Extra whitespace
-    [InlineData("2c,3d,ah", true, 3)]                              // Lowercase input
-    [InlineData("2C,", false, 0)]                                  // Trailing comma -> invalid
-    [InlineData(",2C", false, 0)]                                  // Leading comma -> invalid
-    [InlineData("2C,,3D", false, 0)]                               // Double commas -> invalid
-    [InlineData("2C,1S,3D", false, 0)]                             // Contains an unrecognised card
-    [InlineData("2C 3D", false, 0)]                                // Invalid separator (no commas)
-    [InlineData("JR,2C,3D", true, 3)]                              // Joker handling
-    [InlineData("JR,2C,JR", true, 3)]                              // Two Jokers allowed
-    // Three Jokers -> invalid (will fail at validation stage, but here still shows list)
-    [InlineData("JR,JR,JR", true, 3)] // we’ll validate count elsewhere
+    [InlineData("2C", true, 1)]                // Valid single
+    [InlineData("2C,3D,AH", true, 3)]          // Valid multiple
+    [InlineData(" 2C , 3D , AH ", true, 3)]    // Extra whitespace
+    [InlineData("2c,3d,ah", true, 3)]          // Lowercase input
+    [InlineData("2C,", false, 0)]              // Trailing comma -> invalid
+    [InlineData(",2C", false, 0)]              // Leading comma -> invalid
+    [InlineData("2C,,3D", false, 0)]           // Double commas -> invalid
+    [InlineData("2C,1S,3D", false, 0)]         // Contains an unrecognised card
+    [InlineData("2C 3D", false, 0)]            // Invalid separator (no commas)
+    [InlineData("JR,2C,3D", true, 3)]          // Joker handling
+    [InlineData("JR,2C,JR", true, 3)]          // Two Jokers allowed
+    [InlineData("JR,JR,JR", true, 3)]          // Three Jokers - will fail at hand validation stage, but here still shows list
     public void T1(string input, bool expectedResult, int expectedCount)
     {
         // Arrange & Act
