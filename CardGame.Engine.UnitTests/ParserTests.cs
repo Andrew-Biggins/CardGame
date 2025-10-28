@@ -120,11 +120,14 @@ public class ParserTests
      "then parsing fails without returning cards")]
     public void T2()
     {
+        // Arrange
         var input = new string('A', 10_000);
         var parser = new CsvCardParser();
 
+        // Act
         var result = parser.TryParseMany(input, out var cards);
 
+        // Assert
         Assert.False(result);
         Assert.Empty(cards);
     }

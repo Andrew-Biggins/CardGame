@@ -18,7 +18,7 @@ public class GameEngineTests
         SubInputValidator.Validate(Arg.Any<string>()).Returns(false);
 
         // Act
-        var result = sut.Compute("Invalid input");
+        var result = sut.Compute("Invalid input"); // value irrelevant, substitutes use Arg.Any<string>())
 
         // Assert
         Assert.False(result.IsSuccessful);

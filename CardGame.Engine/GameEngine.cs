@@ -4,6 +4,7 @@ using CardGame.Engine.Services.Validation;
 
 namespace CardGame.Engine;
 
+// Primary constructor for injection of dependencies (used in unit tests)
 internal class GameEngine(IInputValidator inputValidator, ICsvCardParser parser, IHandValidator handValidator, IScoreCalculator scoreCalculator) : IGameEngine
 {
     private readonly IInputValidator _inputValidator = inputValidator ?? throw new ArgumentNullException(nameof(inputValidator));
@@ -11,6 +12,7 @@ internal class GameEngine(IInputValidator inputValidator, ICsvCardParser parser,
     private readonly IHandValidator _handValidator = handValidator ?? throw new ArgumentNullException(nameof(handValidator));
     private readonly IScoreCalculator _scoreCalculator = scoreCalculator ?? throw new ArgumentNullException(nameof(scoreCalculator));
 
+    // Default constructor with concrete implementations (used in production)
     internal GameEngine() : this(new InputValidator(), new CsvCardParser(), new HandValidator(), new ScoreCalculator()) { }
 
     public ScoreResult Compute(string input)

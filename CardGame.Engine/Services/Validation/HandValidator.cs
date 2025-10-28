@@ -17,10 +17,7 @@ internal class HandValidator : IHandValidator
             .GroupBy(c => new { c.Value, c.Suit })
             .Any(g => g.Count() > 1);
 
-        if (duplicates)
-            return HandValidationResult.InvalidDuplicates;
-
-        return HandValidationResult.Valid;
+        return duplicates ? HandValidationResult.InvalidDuplicates : HandValidationResult.Valid;
     }
 }
 

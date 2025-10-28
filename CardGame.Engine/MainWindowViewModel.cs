@@ -11,10 +11,12 @@ public class MainWindowViewModel : INotifyPropertyChanged
     private string _input = string.Empty;
     private int _score;
     private string _error = string.Empty;
-    private bool _hasComputedResult;   
+    private bool _hasComputedResult;
 
+    // Default constructor with concrete implementations (used in production)
     public MainWindowViewModel() : this(new GameEngine()) { }
 
+    // Constructor for injection of dependencies (used in unit tests)
     internal MainWindowViewModel(IGameEngine engine)
     {
         _engine = engine ?? throw new ArgumentNullException(nameof(engine));

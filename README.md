@@ -1,5 +1,8 @@
 # CardGame
 
+## Launch Instructions
+To launch the game in Visual Studio start a new instance of the CardGame.WPF project.
+
 ## Design Philosophy
 - Keep the scoring rules encapsulated behind small, single-purpose services so each concern (input validation, parsing, hand validation, scoring) can evolve independently.
 - Use constructor injection to make dependencies explicit and swap them easily in tests; the default parameterless constructors preserve simple wiring for the WPF app.
@@ -8,4 +11,4 @@
 ## Testing Philosophy
 - Drive each behavior with tests first (TDD) so the public contracts stay stable while refactoring internals.
 - Cover each layer with focused unit tests: validators, parser, calculator, engine orchestration, and ViewModel notification behavior.
-- Add thin integration tests through the ViewModel to ensure the composed pipeline (parse → validate → score) behaves correctly under real scenarios, including edge cases like Joker handling and invalid input.
+- Add thin integration tests through the ViewModel to ensure the composed pipeline (parse, validate, score) behaves correctly under real scenarios, including edge cases like Joker handling and invalid input.

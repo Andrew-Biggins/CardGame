@@ -18,7 +18,10 @@ public class InputValidationTests
     [InlineData("AB ,CD, EF, GH, IJ, KL, MN, OP, QR, ST, UV, WX, YZ, 01, 23, 45, 67, 89")]
     public void T0(string input)
     {
+        // Act
         var isValid = _validator.Validate(input);
+
+        // Assert
         Assert.True(isValid);
     }
 
@@ -64,7 +67,10 @@ public class InputValidationTests
      "then true is returned")]
     public void T2()
     {
+        // Arrange
         var longList = string.Join(",", Enumerable.Repeat("AB", 5_000));
+
+        // Act & Assert
         Assert.True(_validator.Validate(longList));
     }
 }

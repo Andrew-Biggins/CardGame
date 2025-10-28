@@ -1,9 +1,9 @@
-﻿using CardGame.Engine.Services;
-using CardGame.Engine.Services.Calculations;
+﻿using CardGame.Engine.Services.Calculations;
 using CardGame.Engine.Services.Parsing;
 using CardGame.Engine.Services.Validation;
 
 namespace CardGame.Engine.UnitTests;
+
 public class ScoreTests
 {
     [GwtTheory("Given a score calculator",
@@ -29,6 +29,8 @@ public class ScoreTests
     // Joker alone is worth zero
     [InlineData("JR", 0)]
     [InlineData("JR,JR", 0)]
+    // Full deck with two jokers (max score)
+    [InlineData("2C,2D,2H,2S,3C,3D,3H,3S,4C,4D,4H,4S,5C,5D,5H,5S,6C,6D,6H,6S,7C,7D,7H,7S,8C,8D,8H,8S,9C,9D,9H,9S,TC,TD,TH,TS,JC,JD,JH,JS,QC,QD,QH,QS,KC,KD,KH,KS,AC,AD,AH,AS,JR,JR", 4160)]
     public void T0(string input, int expectedScore)
     {
         // Arrange
