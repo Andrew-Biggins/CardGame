@@ -13,13 +13,7 @@ internal class InputValidator : IInputValidator
 
     public bool Validate(string input)
     {
-        if (string.IsNullOrWhiteSpace(input))
-            return false;
-
-        if (!_charCheck.IsMatch(input))
-            return false;
-
-        if (_spaceSeparatorCheck.IsMatch(input))
+        if (string.IsNullOrWhiteSpace(input) || !_charCheck.IsMatch(input) || _spaceSeparatorCheck.IsMatch(input))
             return false;
 
         // Split on comma and validate each trimmed token shape
@@ -27,10 +21,7 @@ internal class InputValidator : IInputValidator
         foreach (var part in parts)
         {
             var token = part.Trim();
-            if (string.IsNullOrEmpty(token))
-                return false; 
-
-            if (!_tokenCheck.IsMatch(token))
+            if (string.IsNullOrEmpty(token) || !_tokenCheck.IsMatch(token))
                 return false; 
         }
 

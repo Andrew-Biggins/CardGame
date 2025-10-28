@@ -8,7 +8,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
 {
     private readonly IGameEngine _engine;
 
-    private string? _input;
+    private string _input = string.Empty;
     private int _score;
     private string _error = string.Empty;
 
@@ -20,7 +20,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         ComputeScoreCommand = new DumbCommand(ComputeScore);
     }
 
-    public string? Input
+    public string Input
     {
         get => _input;
         set => SetProperty(ref _input, value);

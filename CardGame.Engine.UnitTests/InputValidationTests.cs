@@ -15,6 +15,7 @@ public class InputValidationTests
     [InlineData("2C")]
     [InlineData("2S ,3D")]
     [InlineData("ZZ ,3D")]
+    [InlineData("AB ,CD, EF, GH, IJ, KL, MN, OP, QR, ST, UV, WX, YZ, 01, 23, 45, 67, 89")]
     public void T0(string input)
     {
         var isValid = _validator.Validate(input);
