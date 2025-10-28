@@ -6,13 +6,19 @@ namespace CardGame.Engine;
 
 public class MainWindowViewModel : INotifyPropertyChanged
 {
-    private readonly GameEngine _engine = new();
+    private readonly IGameEngine _engine;
 
     private string? _input;
     private int _score;
     private string _error = string.Empty;
 
-    public MainWindowViewModel() => ComputeScoreCommand = new DumbCommand(ComputeScore);
+    public MainWindowViewModel() : this(new GameEngine()) { }
+
+    public MainWindowViewModel(IGameEngine engine)
+    {
+        _engine = engine ?? throw new ArgumentNullException(nameof(engine));
+        ComputeScoreCommand = new DumbCommand(ComputeScore);
+    }
 
     public string? Input
     {

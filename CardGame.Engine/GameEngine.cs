@@ -4,7 +4,7 @@ using CardGame.Engine.Services.Validation;
 
 namespace CardGame.Engine;
 
-internal class GameEngine(IInputValidator inputValidator, ICsvCardParser parser, IHandValidator handValidator, IScoreCalculator scoreCalculator)
+internal class GameEngine(IInputValidator inputValidator, ICsvCardParser parser, IHandValidator handValidator, IScoreCalculator scoreCalculator) : IGameEngine
 {
     private readonly IInputValidator _inputValidator = inputValidator ?? throw new ArgumentNullException(nameof(inputValidator));
     private readonly ICsvCardParser _parser = parser ?? throw new ArgumentNullException(nameof(parser));
