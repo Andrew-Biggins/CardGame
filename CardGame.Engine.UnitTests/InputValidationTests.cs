@@ -58,4 +58,13 @@ public class InputValidationTests
         // Assert
         Assert.False(isValid);
     }
+
+    [Gwt("Given an input validator",
+     "when validating a very long but well-formed list",
+     "then true is returned")]
+    public void T2()
+    {
+        var longList = string.Join(",", Enumerable.Repeat("AB", 5_000));
+        Assert.True(_validator.Validate(longList));
+    }
 }

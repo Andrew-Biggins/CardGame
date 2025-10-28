@@ -114,4 +114,18 @@ public class ParserTests
         Assert.Equal(expectedResult, result);
         Assert.Equal(expectedCount, cards.Count);
     }
+
+    [Gwt("Given a CSV card parser",
+     "when a single token is excessively long",
+     "then parsing fails without returning cards")]
+    public void T2()
+    {
+        var input = new string('A', 10_000);
+        var parser = new CsvCardParser();
+
+        var result = parser.TryParseMany(input, out var cards);
+
+        Assert.False(result);
+        Assert.Empty(cards);
+    }
 }
