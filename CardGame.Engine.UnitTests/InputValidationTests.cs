@@ -14,6 +14,7 @@ public class InputValidationTests
     [InlineData("JR,2C")]
     [InlineData("2C")]
     [InlineData("2S ,3D")]
+    [InlineData("ZZ ,3D")]
     public void T0(string input)
     {
         var isValid = _validator.Validate(input);
@@ -38,6 +39,16 @@ public class InputValidationTests
     [InlineData("2S\t3D")]
     [InlineData("2S\n3D")]
     [InlineData("JR JR")]
+    // Rogue commas
+    [InlineData(",2S")]
+    [InlineData("2S,")]
+    [InlineData("2S,,3D")]
+    [InlineData("2S, ,3D")]
+    // Malformed cards
+    [InlineData("TOO, LONG")]
+    [InlineData("2C, THX")]       // too long
+    [InlineData("S")]             // too short  
+    [InlineData("TC, S")]         // one too short
     public void T1(string input)
     {
         // Act

@@ -14,7 +14,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
 
     public MainWindowViewModel() : this(new GameEngine()) { }
 
-    public MainWindowViewModel(IGameEngine engine)
+    internal MainWindowViewModel(IGameEngine engine)
     {
         _engine = engine ?? throw new ArgumentNullException(nameof(engine));
         ComputeScoreCommand = new DumbCommand(ComputeScore);
@@ -40,7 +40,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
 
     public ICommand ComputeScoreCommand { get; }
 
-    public bool HasScore => string.IsNullOrEmpty(Error) && Score > 0;
+    public bool HasScore => string.IsNullOrEmpty(Error);
 
     private void ComputeScore()
     {

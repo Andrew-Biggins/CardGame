@@ -34,7 +34,7 @@ internal class CsvCardParser : ICsvCardParser
 
         input = input.Trim().ToUpperInvariant();
 
-        if (input.Length != 2) return false;
+        if (input.Length != 2) return false; // Should be picked up by earlier checks, but be defensive
 
         if (input == "JR")
         {

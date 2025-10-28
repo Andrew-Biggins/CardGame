@@ -2,5 +2,5 @@
 
 public interface IGameEngine
 {
-    ScoreResult Compute(string input);
+    ScoreResult Compute(string? input);
 }
