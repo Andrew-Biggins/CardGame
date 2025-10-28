@@ -11,6 +11,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
     private string _input = string.Empty;
     private int _score;
     private string _error = string.Empty;
+    private bool _hasComputedResult;   
 
     public MainWindowViewModel() : this(new GameEngine()) { }
 
@@ -40,7 +41,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
 
     public ICommand ComputeScoreCommand { get; }
 
-    public bool HasScore => string.IsNullOrEmpty(Error);
+    public bool HasScore => _hasComputedResult && string.IsNullOrEmpty(Error);
 
     private void ComputeScore()
     {
@@ -50,6 +51,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         {
             Score = result.Score;
             Error = string.Empty;
+            _hasComputedResult = true;
         }
         else
         {
